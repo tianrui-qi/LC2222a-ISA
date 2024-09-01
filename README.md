@@ -1,7 +1,5 @@
 ## Requirements
 
-### CircuitSim
-
 We use [CircuitSim](https://ra4king.github.io/CircuitSim/) version `1.9.1` to 
 inplement the datapath and simulate the assembly. For Windows user, go to 
 [CircuitSim/Windows/](https://www.roiatalla.com/public/CircuitSim/Windows/) to 
@@ -26,11 +24,6 @@ with JavaFX which CircuitSim uses.
 Note that you need to replace `javafx-sdk-21.0.4` and `CircuitSim1.9.1.jar`
 with the correct path to the JavaFX SDK and the CircuitSim jar. Then, click 
 File -> Load to check our [datapath.sim](datapath.sim) file.
-
-### Assembly
-
-The LC-2222 assembler is written in Python. If you do not have Python 2.6 or 
-newer installed on your system, you will need to install it before you continue.
 
 ## Insturction
 
