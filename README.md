@@ -256,3 +256,21 @@ it to deduce behavior of each instruction.
 
 ![07-Microcontroller](assets/07-Microcontroller.png)
 ![microcode](assets/microcode.png)
+
+## Acknowledgements
+
+I would like to thank 
+[Hanyun (Hannah) Huang](https://www.linkedin.com/in/hanyun-huang/) for her 
+invaluable help in understanding the many details of this project. Her support 
+and clarity were crucial in guiding me through the process.
+
+## References
+
+-   Project 1 - LC-2222 Datapath, *CS2200 Introduction to Systems and Networking* 
+    by Prof. Daniel Forsyth, 
+    [Georgia Institute of Technology](https://www.gatech.edu).
+-   Project 2 - Interrupts, *CS2200 Introduction to Systems and Networking* 
+    by Prof. Daniel Forsyth, 
+    [Georgia Institute of Technology](https://www.gatech.edu).
+-   *Computer Systems: An Integrated Approach to Architecture and Operating Systems*
+    by Umakishore Ramachandran and William D. Leahy.
