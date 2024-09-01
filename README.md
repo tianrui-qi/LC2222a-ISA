@@ -112,8 +112,8 @@ The instructions we implemented are summarized below.
 ## Datapath
 
 A simpler datapth without supporting interrupts can be find
-[here](assets/datapath.png) that you can see the overall structure of the 
-datapath and use it to deduce behavior of each instruction.
+[here](assets/datapath.png) that you can see the overall structure and use it 
+to deduce behavior of each instruction.
 
 ![00-Datapath](assets/00-Datapath.png)
 
@@ -211,13 +211,48 @@ a single `true` or `false` bit for either the condition `A > B`, `A < B`, or
 `func`. The control gate `LdCmp` in [`Datapath`](assets/00-Datapath.png) will be 
 set so that bool output of the comparison logic will be temporarily stored in 
 the register `CmpReg` in [`Datapath`](assets/00-Datapath.png). This bool 
-register will be used in next cycle for ROM `CC` in 
+register will be used in next cycle for `CC` ROM in 
 [`Microcontroller`](assets/07-Microcontroller.png) to decide whether to jump or 
 not.
 
 ![06-CmpLogic](assets/06-CmpLogic.png)
 
-## Microcontrol
+## Microcontrol Unit
+
+This microcontrol unit can be implemented in different ways, such as using 
+combinational logic and flip-flops or a single ROM to hardwire the signals. 
+However, using a single ROM can be highly inefficient, as it would waste a 
+significant amount of space. This is because most microstates do not depend on 
+the opcode or conditional tests to determine which signals to assert. For 
+instance, if the condition line is an input for the address, every microstate 
+would require an address for both condition = 0 and condition = 1, even though 
+this only matters for one specific microstate.
+
+To address this inefficiency, a four-ROM microcontroller can be utilized, which 
+also handles interrupts. In this design, four ROMs are used:
+
+-   Main `MAIN` ROM: Outputs control signals.
+-   Sequencer `SEQ` ROM: Helps determine which microstate to transition to at 
+    the end of the `FETCH` state.
+-   Condition `CC` ROM: Assists in deciding whether to skip an instruction 
+    during `BLT` (Branch Less Than) operations.
+-   Interrupt `INT` ROM: Determines whether the next state is fetch2 or the 
+    start of the `INT` macrostate.
+
+In this arrangement, the next state can originate from four different sources: 
+part of the output from the previous state (`MAIN` ROM), `SEQ` ROM, `CC` ROM, or
+`INT` ROM. A multiplexer (MUX) controls which of these sources is passed through
+to the state register. If the "next state" field from the previous state 
+dictates where to go, neither the `OPTest` nor `ChkCmp` signals are asserted. 
+If the `Opcode` from the instruction register `IR` determines the next state 
+(such as at the end of the `FETCH` state), the `OPTest` signal is asserted. 
+If the comparison circuitry decides the next state (as in a `BLT` instruction), 
+the `ChkCmp` signal is asserted. When dealing with an interrupt (entering the 
+`INT` macrostate), both the `OPTest` and `ChkCmp` signals are asserted. 
+
+A simpler microcontrol unit can be find
+[here](assets/microcontrol.png) that you can see the overall structure and use 
+it to deduce behavior of each instruction.
 
 ![07-Microcontroller](assets/07-Microcontroller.png)
 ![microcode](assets/microcode.png)
