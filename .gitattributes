@@ -1,1 +1,2 @@
 datapath.sim linguist-language=JSON
+*.py linguist-detectable=false
